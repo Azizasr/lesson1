@@ -1,0 +1,36 @@
+
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+const secretNumber = Math.floor(Math.random() * 100) + 1;
+let attempts = 0;
+
+console.log("🎮 Добро пожаловать в игру 'Угадай число'!");
+console.log("Я загадал число от 1 до 100. Попробуй угадать!");
+
+function askGuess() {
+  rl.question("Введите число: ", (answer) => {
+    const guess = Number(answer);
+    attempts++;
+
+    if (isNaN(guess)) {
+      console.log("❌ Пожалуйста, введите число!");
+      askGuess();
+    } else if (guess < secretNumber) {
+      console.log("🔼 Загаданное число больше!");
+      askGuess();
+    } else if (guess > secretNumber) {
+      console.log("🔽 Загаданное число меньше!");
+      askGuess();
+    } else {
+      console.log(`🎉 Поздравляю! Вы угадали число ${secretNumber} за ${attempts} попыток!`);
+      rl.close();
+    }
+  });
+}
+
+askGuess();
